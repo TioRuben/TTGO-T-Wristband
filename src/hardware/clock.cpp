@@ -8,6 +8,10 @@ uint8_t current_minute = 0;
 void initClock()
 {
   rtc.begin(Wire);
+  rtc.clearTimer();
+  rtc.disableAlarm();
+  rtc.disableCLK();
+  rtc.disableTimer();
   rtc.check();
 }
 

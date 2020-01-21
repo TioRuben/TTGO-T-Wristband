@@ -217,8 +217,8 @@ void initDrawBearing()
 {
   tft.fillScreen(TFT_BLACK);
   tft.setTextDatum(MC_DATUM);
-  tft.setTextColor(SEG7_BACKGROUND, TFT_BLACK);
-  tft.drawString("888", tft.width() / 2, tft.height() / 2, 7);
+  tft.setTextColor(TFT_ORANGE, TFT_BLACK);
+  tft.drawString("---", tft.width() / 2, tft.height() / 2, 7);
 }
 
 void refreshDrawBearing(int16_t bearing)
