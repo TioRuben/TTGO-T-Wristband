@@ -63,10 +63,14 @@ void showPage()
     pageBearing(initialLoad);
     break;
   case 4:
+    max_time_out = 30000;
+    pageTemperature(initialLoad);
+    break;
+  case 5:
     max_time_out = 15000;
     pageOta(initialLoad);
     break;
-  case 5:
+  case 6:
     handleSleep();
     break;
   }
@@ -88,7 +92,7 @@ void handleAction()
   case 3:
     actionBearing();
     break;
-  case 4:
+  case 5:
     waitOta();
     page = 0;
     break;

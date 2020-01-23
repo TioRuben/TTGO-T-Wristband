@@ -12,11 +12,7 @@ void pageBearing(bool initialLoading)
   }
   if (millis() - timeBearing > 300)
   {
-    int16_t bearing = getBearing();
-    if (bearing > -1)
-    {
-      refreshDrawBearing(bearing);
-    }
+    refreshDrawBearing(getBearing());
     timeBearing = millis();
   }
 }

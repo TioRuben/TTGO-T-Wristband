@@ -3,8 +3,6 @@
 
 MPU9250 IMU;
 
-bool mpuReady = false;
-
 void initMPU()
 {
   byte c = IMU.readByte(MPU9250_ADDRESS, WHO_AM_I_MPU9250);
@@ -12,82 +10,69 @@ void initMPU()
   {
     IMU.initMPU9250();
     IMU.initAK8963(IMU.magCalibration);
-    mpuReady = true;
   }
-}
-
-void taskInitMPU(void *parameter)
-{
-  IMU.initMPU9250();
-  mpuReady = true;
-  vTaskDelete(NULL);
 }
 
 void mpuSleep()
 {
+  // IMU.writeBit(MPU9250_ADDRESS, PWR_MGMT_1, 5, false);
+  // IMU.writeBit(MPU9250_ADDRESS, PWR_MGMT_1, 6, false);
+  // IMU.writeBit(MPU9250_ADDRESS, PWR_MGMT_1, 4, false);
+  // IMU.writeByte(MPU9250_ADDRESS, PWR_MGMT_2, 0x07);
+  // IMU.writeByte(MPU9250_ADDRESS, ACCEL_CONFIG2, 0x05);
+  // IMU.writeByte(MPU9250_ADDRESS, INT_ENABLE, 0x40);
+  // IMU.writeBit(MPU9250_ADDRESS, MOT_DETECT_CTRL, 7, true);
+  // IMU.writeBit(MPU9250_ADDRESS, MOT_DETECT_CTRL, 6, true);
+  // IMU.writeByte(MPU9250_ADDRESS, WOM_THR, 128);
+  // IMU.writeByte(MPU9250_ADDRESS, LP_ACCEL_ODR, 0);
+  // IMU.writeBit(MPU9250_ADDRESS, PWR_MGMT_1, 5, true);
   IMU.setSleepEnabled(true);
 }
 
 int16_t getBearing()
 {
-  if (mpuReady && IMU.readByte(MPU9250_ADDRESS, INT_STATUS) & 0x01)
-  {
-    IMU.readAccelData(IMU.accelCount); // Read the x/y/z adc values
-    IMU.getAres();
-    IMU.ax = (float)IMU.accelCount[0] * IMU.aRes; // - accelBias[0];
-    IMU.ay = (float)IMU.accelCount[1] * IMU.aRes; // - accelBias[1];
-    IMU.az = (float)IMU.accelCount[2] * IMU.aRes; // - accelBias[2];
-    IMU.readGyroData(IMU.gyroCount);              // Read the x/y/z adc values
-    IMU.getGres();
-    IMU.gx = (float)IMU.gyroCount[0] * IMU.gRes;
-    IMU.gy = (float)IMU.gyroCount[1] * IMU.gRes;
-    IMU.gz = (float)IMU.gyroCount[2] * IMU.gRes;
-    IMU.readMagData(IMU.magCount); // Read the x/y/z adc values
-    IMU.getMres();
-    IMU.magbias[0] = +470.;
-    IMU.magbias[1] = +120.;
-    IMU.magbias[2] = +125.;
-    IMU.mx = (float)IMU.magCount[0] * IMU.mRes * IMU.magCalibration[0] -
-             IMU.magbias[0];
-    IMU.my = (float)IMU.magCount[1] * IMU.mRes * IMU.magCalibration[1] -
-             IMU.magbias[1];
-    IMU.mz = (float)IMU.magCount[2] * IMU.mRes * IMU.magCalibration[2] -
-             IMU.magbias[2];
-    IMU.updateTime();
-    MahonyQuaternionUpdate(IMU.ax, IMU.ay, IMU.az, IMU.gx * DEG_TO_RAD,
-                           IMU.gy * DEG_TO_RAD, IMU.gz * DEG_TO_RAD, IMU.my,
-                           IMU.mx, IMU.mz, IMU.deltat);
-    IMU.delt_t = millis() - IMU.count;
-    if (IMU.delt_t > 20)
-    {
-      IMU.yaw = atan2(2.0f * (*(getQ() + 1) * *(getQ() + 2) + *getQ() *
-                                                                  *(getQ() + 3)),
-                      *getQ() * *getQ() + *(getQ() + 1) * *(getQ() + 1) - *(getQ() + 2) * *(getQ() + 2) - *(getQ() + 3) * *(getQ() + 3));
-      IMU.pitch = -asin(2.0f * (*(getQ() + 1) * *(getQ() + 3) - *getQ() *
-                                                                    *(getQ() + 2)));
-      IMU.roll = atan2(2.0f * (*getQ() * *(getQ() + 1) + *(getQ() + 2) *
-                                                             *(getQ() + 3)),
-                       *getQ() * *getQ() - *(getQ() + 1) * *(getQ() + 1) - *(getQ() + 2) * *(getQ() + 2) + *(getQ() + 3) * *(getQ() + 3));
-      IMU.pitch *= RAD_TO_DEG;
-      IMU.yaw *= RAD_TO_DEG;
-      IMU.roll *= RAD_TO_DEG;
-      IMU.count = millis();
-      IMU.sumCount = 0;
-      IMU.sum = 0;
-      return IMU.roll;
-    }
-    else
-    {
-      return -1;
-    }
-  }
-  else
-  {
-    return -1;
-  }
+  IMU.readMagData(IMU.magCount); // Read the x/y/z adc values
+  IMU.getMres();
+  IMU.mx = (float)IMU.magCount[0] * IMU.mRes * IMU.magCalibration[0] -
+           IMU.magbias[0];
+  IMU.my = (float)IMU.magCount[1] * IMU.mRes * IMU.magCalibration[1] -
+           IMU.magbias[1];
+  IMU.mz = (float)IMU.magCount[2] * IMU.mRes * IMU.magCalibration[2] -
+           IMU.magbias[2];
+  float bearing = atan2(IMU.my, IMU.mx);
+  return (bearing > 0 ? bearing : (2 * PI + bearing)) * 360 / (2 * PI);
 }
 
 int calibrateBearing()
 {
+  uint16_t ii = 0, sample_count = 1500;
+  int32_t mag_bias[3] = {0, 0, 0};
+  int16_t mag_max[3] = {-32767, -32767, -32767}, mag_min[3] = {32767, 32767, 32767}, mag_temp[3] = {0, 0, 0};
+  sleep(4);
+  for (ii = 0; ii < sample_count; ii++)
+  {
+    IMU.readMagData(mag_temp); // Read the mag data
+    for (int jj = 0; jj < 3; jj++)
+    {
+      if (mag_temp[jj] > mag_max[jj])
+        mag_max[jj] = mag_temp[jj];
+      if (mag_temp[jj] < mag_min[jj])
+        mag_min[jj] = mag_temp[jj];
+    }
+    delay(12);                                                              // at 100 Hz ODR, new mag data is available every 10 ms
+    mag_bias[0] = (mag_max[0] + mag_min[0]) / 2;                            // get average x mag bias in counts
+    mag_bias[1] = (mag_max[1] + mag_min[1]) / 2;                            // get average y mag bias in counts
+    mag_bias[2] = (mag_max[2] + mag_min[2]) / 2;                            // get average z mag bias in counts
+    IMU.magbias[0] = (float)mag_bias[0] * IMU.mRes * IMU.magCalibration[0]; // save mag biases in G for main program
+    IMU.magbias[1] = (float)mag_bias[1] * IMU.mRes * IMU.magCalibration[1];
+    IMU.magbias[2] = (float)mag_bias[2] * IMU.mRes * IMU.magCalibration[2];
+  }
   return 1;
+}
+
+float getTemperature()
+{
+  int tempCount = IMU.readTempData();
+  float temperature = ((float)tempCount) / 333.87 + 21.0;
+  return temperature;
 }

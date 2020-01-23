@@ -12,9 +12,7 @@
 
 void initMPU();
 int16_t getBearing();
-float constrainAngle360(float dta);
 int calibrateBearing();
-void calibrateAccel();
 void calibrateGyro();
 void mpuSleep();
-void taskInitMPU(void *parameter);
+float getTemperature();

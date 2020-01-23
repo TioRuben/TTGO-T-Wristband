@@ -91,7 +91,11 @@ void tftSleep(bool showMsg)
     tft.drawString("Press again to wake up", tft.width() / 2, tft.height() / 2);
     delay(2000);
   }
+  tft.fillScreen(TFT_BLACK);
+  tft.writecommand(ST7735_SWRESET);
+  delay(100);
   tft.writecommand(ST7735_SLPIN);
+  delay(150);
   tft.writecommand(ST7735_DISPOFF);
 }
 
@@ -234,4 +238,21 @@ void refreshDrawBearing(int16_t bearing)
   }
   tft.setTextColor(TFT_ORANGE, TFT_BLACK);
   tft.drawString(bearingText, tft.width() / 2, tft.height() / 2, 7);
+}
+
+void initDrawTemperature()
+{
+  tft.fillScreen(TFT_BLACK);
+  tft.setTextDatum(BR_DATUM);
+  tft.setTextColor(TFT_CYAN, TFT_BLACK);
+  tft.drawString("Degrees Celsius", tft.width() - 5, tft.height(), 2);
+}
+
+void refreshDrawTemperature(float temperature)
+{
+  char temperatureText[8] = " ";
+  sprintf(temperatureText, "%.1fC", temperature);
+  tft.setTextDatum(TC_DATUM);
+  tft.setTextColor(TFT_RED, TFT_BLACK);
+  tft.drawString(temperatureText, tft.width() / 2, 5, 7);
 }

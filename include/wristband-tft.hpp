@@ -25,3 +25,5 @@ void clearScreen();
 void drawBattery(float voltage, uint8_t percentage, bool charging);
 void initDrawBearing();
 void refreshDrawBearing(int16_t bearing);
+void initDrawTemperature();
+void refreshDrawTemperature(float temperature);
