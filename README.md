@@ -4,17 +4,32 @@ First steps with TTGO T-Wristband. [Product page](https://es.aliexpress.com/item
 
 Developed with PlatformIO
 
+Includes a paged interface framework.
+
 User interface:
 
 - Single touch: change page
 - Long touch: page action
+- Led: Charging status
 
 Currently available pages:
 
 - CET/CEST time, action: connect to wifi and update via NTP
 - UTC time, action: connect to wifi and update via NTP
-- Battery status
-- Bearing indicator, action: calibrate magnetometer. (Not very precise, needs much more work)
+- Battery status (no action in this page)
+- Bearing indicator, action: calibrate magnetometer. (Still working on it)
 - OTA: long touch to enter OTA mode, to load firmware from PlatformIO
 
 Follow repo to get more updates
+
+### ToDo list
+
+- [x] UTC Time
+- [ ] Port ADC calibration from Lilygo example
+- [ ] Finish magnetometer bearing indicator
+- [ ] Add magnetometer calibration action
+- [ ] Add MPU temperature measurement page
+- [ ] Refactor page framework to work with RTOS tasks
+- [ ] Charging animation
+- [ ] Prevent deep sleep when charging to feedback the charging status (via LED)
+- [ ] Bluetooth
