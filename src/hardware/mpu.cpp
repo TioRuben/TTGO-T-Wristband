@@ -10,6 +10,7 @@ void initMPU()
   {
     IMU.initMPU9250();
     IMU.initAK8963(IMU.magCalibration);
+    getMagBiasEEPROM(IMU.magbias);
   }
 }
 
@@ -33,11 +34,11 @@ int16_t getBearing()
 {
   IMU.readMagData(IMU.magCount); // Read the x/y/z adc values
   IMU.getMres();
-  IMU.mx = (float)IMU.magCount[0] * IMU.mRes * IMU.magCalibration[0] -
+  IMU.mx = (float)IMU.magCount[0] * IMU.mRes * IMU.magCalibration[0] +
            IMU.magbias[0];
-  IMU.my = (float)IMU.magCount[1] * IMU.mRes * IMU.magCalibration[1] -
+  IMU.my = (float)IMU.magCount[1] * IMU.mRes * IMU.magCalibration[1] +
            IMU.magbias[1];
-  IMU.mz = (float)IMU.magCount[2] * IMU.mRes * IMU.magCalibration[2] -
+  IMU.mz = (float)IMU.magCount[2] * IMU.mRes * IMU.magCalibration[2] +
            IMU.magbias[2];
   float bearing = atan2(IMU.my, IMU.mx);
   return (bearing > 0 ? bearing : (2 * PI + bearing)) * 360 / (2 * PI);
@@ -67,6 +68,7 @@ int calibrateBearing()
     IMU.magbias[1] = (float)mag_bias[1] * IMU.mRes * IMU.magCalibration[1];
     IMU.magbias[2] = (float)mag_bias[2] * IMU.mRes * IMU.magCalibration[2];
   }
+  storeMagBiasEEPROM(IMU.magbias);
   return 1;
 }
 

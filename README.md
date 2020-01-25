@@ -33,3 +33,4 @@ Follow repo to get more updates
 - [ ] Charging animation
 - [ ] Prevent deep sleep when charging to feedback the charging status (via LED)
 - [ ] Bluetooth
+- [ ] "Next appointment" page

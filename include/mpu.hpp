@@ -5,6 +5,7 @@
 #include "hal.hpp"
 #include "MPU9250.hpp"
 #include "wristband-tft.hpp"
+#include "eeprom.hpp"
 
 #define GYRO_CALIBRATION_BASE_ADDRESS 0x10
 #define MAG_CALIBRATION_BASE_ADDRESS 0x20
