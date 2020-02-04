@@ -2,18 +2,21 @@
 
 void storeMagBiasEEPROM(float *magbias)
 {
-  int i = 0;
-  for (i = 0; i < 3; i++)
+  EEPROM.begin(3 * sizeof(float));
+  for (uint8_t i = 0; i < 3; i++)
   {
     EEPROM.put(MAG_CALIBRATION_ADDRESS + (i * sizeof(float)), magbias[i]);
   }
+  EEPROM.commit();
+  EEPROM.end();
 }
 
 void getMagBiasEEPROM(float *magbias)
 {
-  int i = 0;
-  for (i = 0; i < 3; i++)
+  EEPROM.begin(3 * sizeof(float));
+  for (uint8_t i = 0; i < 3; i++)
   {
     magbias[i] = EEPROM.read(MAG_CALIBRATION_ADDRESS + (i * sizeof(float)));
   }
+  EEPROM.end();
 }

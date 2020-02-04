@@ -89,6 +89,9 @@ void handleAction()
   case 1:
     actionClock();
     break;
+  case 2:
+    waitOta();
+    break;
   case 3:
     actionBearing();
     break;
