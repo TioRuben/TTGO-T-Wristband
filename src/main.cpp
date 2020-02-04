@@ -14,6 +14,7 @@ void setup()
   Serial.begin(115200);
   Wire.begin(I2C_SDA_PIN, I2C_SCL_PIN);
   Wire.setClock(400000);
+  setupADC();
   initClock();
   tftInit();
   initButton();

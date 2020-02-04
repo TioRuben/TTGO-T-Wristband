@@ -16,32 +16,24 @@ void initMPU()
 
 void mpuSleep()
 {
-  // IMU.writeBit(MPU9250_ADDRESS, PWR_MGMT_1, 5, false);
-  // IMU.writeBit(MPU9250_ADDRESS, PWR_MGMT_1, 6, false);
-  // IMU.writeBit(MPU9250_ADDRESS, PWR_MGMT_1, 4, false);
-  // IMU.writeByte(MPU9250_ADDRESS, PWR_MGMT_2, 0x07);
-  // IMU.writeByte(MPU9250_ADDRESS, ACCEL_CONFIG2, 0x05);
-  // IMU.writeByte(MPU9250_ADDRESS, INT_ENABLE, 0x40);
-  // IMU.writeBit(MPU9250_ADDRESS, MOT_DETECT_CTRL, 7, true);
-  // IMU.writeBit(MPU9250_ADDRESS, MOT_DETECT_CTRL, 6, true);
-  // IMU.writeByte(MPU9250_ADDRESS, WOM_THR, 128);
-  // IMU.writeByte(MPU9250_ADDRESS, LP_ACCEL_ODR, 0);
-  // IMU.writeBit(MPU9250_ADDRESS, PWR_MGMT_1, 5, true);
-  IMU.setSleepEnabled(true);
+  IMU.writeBit(MPU9250_ADDRESS, PWR_MGMT_1, 5, false);
+  IMU.writeBit(MPU9250_ADDRESS, PWR_MGMT_1, 6, false);
+  IMU.writeBit(MPU9250_ADDRESS, PWR_MGMT_1, 4, false);
+  IMU.writeByte(MPU9250_ADDRESS, PWR_MGMT_2, 0x07);
+  IMU.writeByte(MPU9250_ADDRESS, ACCEL_CONFIG2, 0x05);
+  IMU.writeByte(MPU9250_ADDRESS, INT_ENABLE, 0x40);
+  IMU.writeBit(MPU9250_ADDRESS, MOT_DETECT_CTRL, 7, true);
+  IMU.writeBit(MPU9250_ADDRESS, MOT_DETECT_CTRL, 6, true);
+  IMU.writeByte(MPU9250_ADDRESS, WOM_THR, 128);
+  IMU.writeByte(MPU9250_ADDRESS, LP_ACCEL_ODR, 0);
+  IMU.writeBit(MPU9250_ADDRESS, PWR_MGMT_1, 5, true);
+  // IMU.setSleepEnabled(true);
 }
 
 int16_t getBearing()
 {
   IMU.readMagData(IMU.magCount); // Read the x/y/z adc values
   IMU.getMres();
-  // if (IMU.magbias[0] == 0 || IMU.magbias[1] == 0 || IMU.magbias[2] == 0)
-  // {
-  //   IMU.magbias[0] = +470.;
-  //   // User environmental x-axis correction in milliGauss TODO axis??
-  //   IMU.magbias[1] = +120.;
-  //   // User environmental x-axis correction in milliGauss
-  //   IMU.magbias[2] = +125.;
-  // }
   IMU.mx = (float)IMU.magCount[0] * IMU.mRes * IMU.magCalibration[0] -
            IMU.magbias[0];
   IMU.my = (float)IMU.magCount[1] * IMU.mRes * IMU.magCalibration[1] -
