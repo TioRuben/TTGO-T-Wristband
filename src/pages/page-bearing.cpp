@@ -8,7 +8,6 @@ void pageBearing(bool initialLoading)
   {
     deactivateWifi();
     initDrawBearing();
-    initMPU();
   }
   if (millis() - timeBearing > 300)
   {

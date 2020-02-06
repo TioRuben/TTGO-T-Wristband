@@ -4,9 +4,9 @@ WiFiManager wifiManager;
 
 void configModeCallback(WiFiManager *myWiFiManager)
 {
-  Serial.println("Entered config mode");
-  Serial.println(WiFi.softAPIP());
-  Serial.println(myWiFiManager->getConfigPortalSSID());
+  char apName[50] = " ";
+  wifiManager.getConfigPortalSSID().toCharArray(apName, 50);
+  wifiManagerAdvice(apName);
 }
 
 void setupWiFi()
@@ -19,6 +19,8 @@ void setupWiFi()
 
 void activateWifi()
 {
+  WiFi.mode(WIFI_STA);
+  sleep(1);
   if (WiFi.status() != WL_CONNECTED)
   {
     setupWiFi();

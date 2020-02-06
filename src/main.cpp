@@ -16,12 +16,14 @@ void setup()
   Wire.setClock(400000);
   setupADC();
   initClock();
+  initMPU();
   tftInit();
   initButton();
-  addBatteryChargeInterrupt();
+  setupBattery();
 }
 
 void loop()
 {
   handleUi();
+  updateBatteryChargeStatus();
 }

@@ -16,18 +16,26 @@ void initMPU()
 
 void mpuSleep()
 {
-  IMU.writeBit(MPU9250_ADDRESS, PWR_MGMT_1, 5, false);
-  IMU.writeBit(MPU9250_ADDRESS, PWR_MGMT_1, 6, false);
-  IMU.writeBit(MPU9250_ADDRESS, PWR_MGMT_1, 4, false);
-  IMU.writeByte(MPU9250_ADDRESS, PWR_MGMT_2, 0x07);
-  IMU.writeByte(MPU9250_ADDRESS, ACCEL_CONFIG2, 0x05);
-  IMU.writeByte(MPU9250_ADDRESS, INT_ENABLE, 0x40);
-  IMU.writeBit(MPU9250_ADDRESS, MOT_DETECT_CTRL, 7, true);
-  IMU.writeBit(MPU9250_ADDRESS, MOT_DETECT_CTRL, 6, true);
-  IMU.writeByte(MPU9250_ADDRESS, WOM_THR, 128);
-  IMU.writeByte(MPU9250_ADDRESS, LP_ACCEL_ODR, 0);
-  IMU.writeBit(MPU9250_ADDRESS, PWR_MGMT_1, 5, true);
-  // IMU.setSleepEnabled(true);
+  // IMU.writeBit(MPU9250_ADDRESS, PWR_MGMT_1, 5, false);
+  // IMU.writeBit(MPU9250_ADDRESS, PWR_MGMT_1, 6, false);
+  // IMU.writeBit(MPU9250_ADDRESS, PWR_MGMT_1, 4, false);
+  // IMU.writeByte(MPU9250_ADDRESS, PWR_MGMT_2, 0x07);
+  // IMU.writeByte(MPU9250_ADDRESS, ACCEL_CONFIG2, 0x05);
+  // IMU.writeByte(MPU9250_ADDRESS, INT_ENABLE, 0x40);
+  // IMU.writeBit(MPU9250_ADDRESS, MOT_DETECT_CTRL, 7, true);
+  // IMU.writeBit(MPU9250_ADDRESS, MOT_DETECT_CTRL, 6, true);
+  // IMU.writeByte(MPU9250_ADDRESS, WOM_THR, 220);
+  // IMU.writeBit(MPU9250_ADDRESS, INT_PIN_CFG, 5, 0);
+  // IMU.writeByte(MPU9250_ADDRESS, INT_STATUS, 0);
+  // IMU.writeByte(MPU9250_ADDRESS, LP_ACCEL_ODR, 0);
+  // IMU.writeBit(MPU9250_ADDRESS, PWR_MGMT_1, 5, true);
+
+  // pinMode(39, GPIO_MODE_INPUT);
+  // char msg[10] = " ";
+  // sprintf(msg, "%d", digitalRead(39));
+  // msgBig(msg);
+  // sleep(1);
+  IMU.setSleepEnabled(true);
 }
 
 int16_t getBearing()
