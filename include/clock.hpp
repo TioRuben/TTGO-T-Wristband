@@ -5,6 +5,7 @@
 #include "translations.hpp"
 
 void initClock();
+void rtcSleep();
 RTC_Date getClockTime();
 RTC_Date getUTCTime();
 void setTime(RTC_Date datetime);

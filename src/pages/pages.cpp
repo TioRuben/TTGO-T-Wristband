@@ -17,6 +17,7 @@ void initButton()
   tp_button.onPressedFor(1000, handleAction);
   tp_button.onPressed(increasePage);
   page = 0;
+  showPage();
 }
 
 void handleUi()

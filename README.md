@@ -29,6 +29,7 @@ Follow repo to get more updates
 - [x] Finish compass
 - [x] Add magnetometer calibration action
 - [x] Add MPU temperature measurement page
+- [x] Wake on motion interrupt. Wakes the wristband if big movements (ie when moving the arm to watch the time).
 - [ ] Refactor page framework to work with RTOS tasks
 - [ ] Charging animation
 - [ ] Prevent deep sleep when charging to feedback the charging status (via LED)
