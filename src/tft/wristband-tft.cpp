@@ -8,6 +8,9 @@ void tftInit()
   tft.setRotation(1);
   tft.setSwapBytes(true);
   tft.fillScreen(TFT_BLACK);
+  ledcSetup(0, 5000, 8);
+  ledcAttachPin(TFT_BL, 0);
+  ledcWrite(0, 185);
 }
 
 void wifiManagerAdvice(const char *ap_name)
