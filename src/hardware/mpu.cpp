@@ -24,18 +24,11 @@ void mpuSleep()
   IMU.writeByte(MPU9250_ADDRESS, INT_ENABLE, 0x40);
   IMU.writeBit(MPU9250_ADDRESS, MOT_DETECT_CTRL, 7, true);
   IMU.writeBit(MPU9250_ADDRESS, MOT_DETECT_CTRL, 6, true);
-  IMU.writeByte(MPU9250_ADDRESS, WOM_THR, 170);
+  IMU.writeByte(MPU9250_ADDRESS, WOM_THR, 220);
   IMU.writeBit(MPU9250_ADDRESS, INT_PIN_CFG, 5, 0);
   IMU.writeByte(MPU9250_ADDRESS, INT_STATUS, 0);
-  IMU.writeByte(MPU9250_ADDRESS, LP_ACCEL_ODR, 0x03);
+  IMU.writeByte(MPU9250_ADDRESS, LP_ACCEL_ODR, 0x01);
   IMU.writeBit(MPU9250_ADDRESS, PWR_MGMT_1, 5, true);
-
-  // pinMode(39, GPIO_MODE_INPUT);
-  // char msg[10] = " ";
-  // sprintf(msg, "%d", digitalRead(39));
-  // msgBig(msg);
-  // sleep(1);
-  // IMU.setSleepEnabled(true);
 }
 
 int16_t getBearing()

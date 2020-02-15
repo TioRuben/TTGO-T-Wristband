@@ -48,7 +48,7 @@ void showPage()
   switch (page)
   {
   case 0:
-    max_time_out = 15000;
+    max_time_out = 8000;
     pageClock(initialLoad);
     break;
   case 1:
