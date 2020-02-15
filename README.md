@@ -20,6 +20,7 @@ Includes a paged interface framework.
 - UTC time, action: connect to wifi and update via NTP
 - Battery status. Action: OTA mode.
 - Compass, action: calibrate magnetometer.
+- Temperature: from the MPU9250 temp register.
 - OTA: long touch to enter OTA mode, to load firmware from PlatformIO.
 
 ## Build and Flashing
