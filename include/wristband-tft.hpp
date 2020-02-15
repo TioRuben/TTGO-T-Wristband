@@ -1,5 +1,4 @@
 #include <Arduino.h>
-#include <tft_drivers/ST7735_Defines.h>
 #include <TFT_eSPI.h>
 #include <SPI.h>
 #include <Wire.h>
