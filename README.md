@@ -80,6 +80,12 @@ Press the upload button in PlatformIO
 
 ![Upload Button](https://docs.platformio.org/en/latest/_images/platformio-ide-vscode-build-project.png)
 
+or build it with command line:
+
+```bash
+pio run --target upload
+```
+
 The project will compile and upload to the wristband via WiFi.
 
 ## Follow repo to get more updates
