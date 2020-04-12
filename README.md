@@ -42,57 +42,45 @@ code .
 
 In the first flash, edit `platformio.ini` and comment all upload config (upload_protocol, upload_port, upload_flags):
 
-```conf
-[...]
-  -DLOAD_GFXFF=1
-  -DSMOOTH_FONT=1
-  -DSPI_FREQUENCY=27000000
-;upload_protocol = espota
-;upload_port = 192.168.0.46
-;upload_flags =
-;    --auth=wristbandpass
-monitor_speed = 115200
-lib_ldf_mode = deep+
-lib_deps =
-[...]
-```
-
 Connect wristband via USB with the supplied daughter board. In Windows 10, drivers are installed automatically. I guess with other OS will be automatically installed too.
 
-After plugging wristband, press the arrow button at the bottom of VSCode
+After plugging wristband, please select build variant **esp32dev** on VisualCode `PlatformIO icon->env:esp32dev->Build`: 
 
-![Upload Button](https://docs.platformio.org/en/latest/_images/platformio-ide-vscode-build-project.png)
+![Upload Button](https://raw.githubusercontent.com/hpsaturn/TTGO-T-Wristband/av/pio_config_envs/resources/vcode_env_usb_build.jpg)
 
-PlatformIO will build and upload the binaries to the TTGO T-Wristband.
+or build it with command line:
+
+```bash
+pio run -e esp32dev --target upload
+```
+
+PlatformIO will build and upload the binaries to the TTGO T-Wristband via USB.
 
 ## OTA Upload
 
 After first flashing, you can use OTA upload. First of all, go to battery or OTA page in the wristband. Then maintain the wristband button pressed. If your Wifi is still not configured, you will see an screen asking you to connect to the wristband AP. Connect to It and follow the instructions in the captive portal to configure wifi (more info: [WifiManager](https://github.com/tzapu/WiFiManager#development)).
 
-Once configured, you will see the "waiting for ota" message in the screen. Find your wristband IP Address, uncomment the `platformio.ini` lines you commented before and enter the IP address in the `upload_port` config.
+Once configured, you will see the "waiting for ota" message in the screen. Find your wristband IP Address, in your `platformio.ini` please enter the IP address in the `upload_port` config.
 
-```conf
+```config
 [...]
-  -DLOAD_GFXFF=1
-  -DSMOOTH_FONT=1
-  -DSPI_FREQUENCY=27000000
+[env:esp32devOTA]
+platform = espressif32
+board = esp32dev
+framework = ${common_env_data.framework}
+monitor_speed = ${common_env_data.monitor_speed}
 upload_protocol = espota
 upload_port = [YOUR_IP_ADDRESS]
-upload_flags =
-    --auth=wristbandpass
-monitor_speed = 115200
-lib_ldf_mode = deep+
-lib_deps =
 [...]
 ```
 
 It's supposed to work with hostnames, but sometimes fails.
 
-Press again the upload button in PlatformIO
+Press the upload button in PlatformIO
 
 ![Upload Button](https://docs.platformio.org/en/latest/_images/platformio-ide-vscode-build-project.png)
 
-The project will compile and upload to the wristband.
+The project will compile and upload to the wristband via WiFi.
 
 ## Follow repo to get more updates
 
