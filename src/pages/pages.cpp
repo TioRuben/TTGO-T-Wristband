@@ -60,13 +60,21 @@ void showPage()
     pageBattery(initialLoad);
     break;
   case 3:
+#ifndef IMU_SKIP
     max_time_out = 60000;
     pageBearing(initialLoad);
     break;
+#else
+    page++;
+#endif
   case 4:
+#ifndef IMU_SKIP
     max_time_out = 30000;
     pageTemperature(initialLoad);
     break;
+#else
+    page++;
+#endif
   case 5:
     max_time_out = 15000;
     pageOta(initialLoad);
@@ -94,7 +102,9 @@ void handleAction()
     waitOta();
     break;
   case 3:
+#ifndef IMU_SKIP
     actionBearing();
+#endif
     break;
   case 5:
     waitOta();
