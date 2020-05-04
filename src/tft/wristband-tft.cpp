@@ -61,9 +61,19 @@ void msgError(const char *message)
   msg(message, TFT_RED);
 }
 
+void msgError(const char *message1, const char *message2)
+{
+  msg(message1, message2, TFT_RED);
+}
+
 void msgWarning(const char *message)
 {
   msg(message, TFT_ORANGE);
+}
+
+void msgWarning(const char *message1, const char *message2)
+{
+  msg(message1, message2, TFT_ORANGE);
 }
 
 void msgSuccess(const char *message)
@@ -71,9 +81,19 @@ void msgSuccess(const char *message)
   msg(message, TFT_GREEN);
 }
 
+void msgSuccess(const char *message1, const char *message2)
+{
+  msg(message1, message2, TFT_GREEN);
+}
+
 void msgInfo(const char *message)
 {
   msg(message, TFT_CYAN);
+}
+
+void msgInfo(const char *message1, const char *message2)
+{
+  msg(message1, message2, TFT_CYAN);
 }
 
 void msg(const char *message, uint16_t color)
@@ -82,6 +102,15 @@ void msg(const char *message, uint16_t color)
   tft.setTextColor(color);
   tft.setTextDatum(MC_DATUM);
   tft.drawString(message, tft.width() / 2, tft.height() / 2, 2);
+}
+
+void msg(const char *message1, const char *message2, uint16_t color)
+{
+  tft.fillScreen(TFT_BLACK);
+  tft.setTextColor(color);
+  tft.setTextDatum(MC_DATUM);
+  tft.drawString(message1, tft.width() / 2, tft.height() / 2 - 15, 2);
+  tft.drawString(message2, tft.width() / 2, tft.height() / 2 + 15, 2);
 }
 
 void tftSleep(bool showMsg)
