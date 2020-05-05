@@ -17,7 +17,11 @@ void setup()
   deactivateWifi();
   btStop();
   setupADC();
+#ifndef IMU_SKIP
   initMPU();
+#else
+  mpuDeepSleep();
+#endif
   initButton();
   setupBattery();
 }

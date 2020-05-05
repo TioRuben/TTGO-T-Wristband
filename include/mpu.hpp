@@ -16,4 +16,5 @@ int16_t getBearing();
 int calibrateBearing();
 void calibrateGyro();
 void mpuSleep();
+void mpuDeepSleep();
 float getTemperature();
