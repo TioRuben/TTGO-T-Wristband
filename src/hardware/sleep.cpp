@@ -3,7 +3,6 @@
 void handleSleep(bool showMsg)
 {
   //tftSleep(showMsg);
-  mpuSleep();
 #ifndef IMU_SKIP
   mpuSleep();
 #endif
