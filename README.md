@@ -1,3 +1,5 @@
+[![PlatformIO](https://github.com/TioRuben/TTGO-T-Wristband/workflows/PlatformIO/badge.svg)](https://github.com/TioRuben/TTGO-T-Wristband/actions/)
+
 # WIP: TTGO T-Wristband Example
 
 First steps with TTGO T-Wristband. [Product page](https://es.aliexpress.com/item/4000527495064.html).

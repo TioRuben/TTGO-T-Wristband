@@ -25,12 +25,12 @@ jobs:
           platformio update
       - name: Build test
         run: |
-          platformio run
+          pio run -e esp32devOTA -e esp32dev
       - uses: actions/upload-artifact@v1
         with:
           name: firmware
-          path: .pio/build/esp32dev/firmware.bin
+          path: .pio/build/esp32devOTA/firmware.bin
       - uses: actions/upload-artifact@v1
         with:
           name: partitions
-          path: .pio/build/esp32dev/partitions.bin
+          path: .pio/build/esp32devOTA/partitions.bin
